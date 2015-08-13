@@ -14,7 +14,7 @@ module Turf; class Lookup
   end
 
   def env_class
-    "Turf::#{env.titlecase}".constantize
+    Object.const_get("Turf::#{env.capitalize}")
   end
 
   def env

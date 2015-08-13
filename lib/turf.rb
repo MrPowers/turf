@@ -1,5 +1,4 @@
 require "turf/version"
-require 'active_support/all'
 require 'pry'
 
 require_relative "./turf/lookup.rb"
