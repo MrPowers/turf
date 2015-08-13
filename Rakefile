@@ -1,6 +1,10 @@
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 
-RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:spec) do |task|
+  task.verbose = false
+end
 
 task :default => :spec
+
+Dir["lib/tasks/**/*.rake"].each { |ext| load ext }
