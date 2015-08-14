@@ -4,7 +4,7 @@ module Turf; class Lookup
     lookup_path.each do |obj|
       return obj.send(message) if obj.respond_to?(message)
     end
-    raise "#{message} was not found in the Turf configuration files"
+    raise "The #{message} method could not be found in any of these Turf configuration classes: #{classes.join(", ")}"
   end
 
   private
