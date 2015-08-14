@@ -7,14 +7,37 @@ module Turf; class Lookup
     raise "#{message} was not found in the Turf configuration files"
   end
 
+  private
+
   def lookup_path
-    p = [env_class.new, Default.new]
-    p.unshift(Local.new) unless env == "test"
-    p
+    classes.map(&:new)
+  end
+
+  def classes
+    [
+      (local_class unless env == "test"),
+      env_class,
+      default_class
+    ].compact
+  end
+
+  def local_class
+    class_or_nil { Local }
+  end
+
+  def default_class
+    class_or_nil { Default }
   end
 
   def env_class
-    Object.const_get("Turf::#{env.capitalize}")
+    class_or_nil { Object.const_get("Turf::#{env.capitalize}") }
+  end
+
+  def class_or_nil(&block)
+    begin(instance_eval(&block))
+      instance_eval(&block)
+    rescue NameError
+    end
   end
 
   def env
