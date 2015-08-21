@@ -35,10 +35,10 @@ module Turf; describe Lookup do
     end
 
     it "doesn't skip local in the development environment" do
-      ENV['PROJECT_ENV'] = "development"
+      ENV['RAILS_ENV'] = "development"
       m = Lookup.new
       expect(m.find(:something)).to eq "something in local"
-      ENV['PROJECT_ENV'] = "test"
+      ENV['RAILS_ENV'] = "test"
     end
 
     it "looks in env second" do
@@ -60,10 +60,10 @@ module Turf; describe Lookup do
 
   context "#classes" do
     it "returns a list of the classes for the method lookup" do
-      ENV['PROJECT_ENV'] = "development"
+      ENV['RAILS_ENV'] = "development"
       m = Lookup.new
       expect(m.send(:classes)).to eq [Turf::Local, Turf::Development]
-      ENV['PROJECT_ENV'] = "test"
+      ENV['RAILS_ENV'] = "test"
     end
   end
 

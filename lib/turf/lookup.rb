@@ -41,7 +41,7 @@ module Turf; class Lookup
   end
 
   def env
-    ENV['PROJECT_ENV'] ||= ENV['RAILS_ENV'] || 'development'
+    ENV['RAILS_ENV'] || 'development'
   end
 
 end; end
