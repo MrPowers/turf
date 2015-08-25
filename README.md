@@ -83,6 +83,44 @@ Create the `Turf::Local`, `Turf::Test`, `Turf::Development`, `Turf::Production`,
 
 Use `Turf.find()` in your project.
 
+## Suggested Setup
+
+Create the `config/turf/default.rb`, `config/turf/development.rb`, etc. files.
+
+The `Turf::Default` class should define the project root:
+
+```ruby
+def root
+  @root ||= File.expand_path("../../", File.dirname(__FILE__))
+end
+```
+
+Require all the files in the `/lib/#{project_name}.rb` file:
+
+```ruby
+require_relative "../config/turf/default.rb"
+
+def require_all(pattern)
+  Dir.glob("#{Turf.find(:root)}/#{pattern}/**/*.rb").sort.each { |path| require path }
+end
+
+require_all("config/turf")
+```
+
+Set the `RAILS_ENV` to "develoment" at the top of the `/lib/#{project_name}.rb` file:
+
+```ruby
+ENV['RAILS_ENV'] ||= "development"
+```
+
+Set the `RAILS_ENV` to "test" in the `spec_helper.rb` file:
+
+```ruby
+ENV['RAILS_ENV'] = 'test'
+```
+
+Set the `RAILS_ENV` to production on the remote host.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/MrPowers/turf.
