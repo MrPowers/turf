@@ -79,20 +79,18 @@ Require turf:
 require 'turf'
 ```
 
-Create the `Turf::Local`, `Turf::Test`, `Turf::Development`, `Turf::Production`, and `Turf::Default` classes (you don't have to create all of them, just the ones you want).
-
-Use `Turf.find()` in your project.
-
 ## Suggested Setup
 
-Create the `config/turf/default.rb`, `config/turf/development.rb`, etc. files.
-
-The `Turf::Default` class should define the project root:
+Include the Turf setup rake task in your project's `Rakefile`:
 
 ```ruby
-def root
-  @root ||= File.expand_path("../../", File.dirname(__FILE__))
-end
+load "tasks/setup.rake"
+```
+
+Run the rake task to create the classes in your project:
+
+```
+bundle exec rake turf:setup
 ```
 
 Require all the files in the `/lib/#{project_name}.rb` file:
