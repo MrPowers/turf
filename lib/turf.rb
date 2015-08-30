@@ -3,8 +3,18 @@ require "turf/version"
 require_relative "./turf/lookup.rb"
 
 module Turf
-  def self.find(message)
-    m = Lookup.new
-    m.find(message)
+
+  class << self
+
+    def find(message)
+      m = Lookup.new
+      m.find(message)
+    end
+
+    def method_missing(name, *args)
+      find(name)
+    end
+
   end
+
 end
