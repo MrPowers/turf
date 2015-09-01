@@ -56,6 +56,13 @@ module Turf; describe Lookup do
       message = "The hi_there method could not be found in any of these Turf configuration classes: Turf::Test"
       expect {m.find(:hi_there)}.to raise_error(message)
     end
+
+    it "raises an exception when no classes are found" do
+      m = Lookup.new
+      allow(m).to receive(:classes).and_return([])
+      message = "No Turf classes found... these must be defined and required"
+      expect {m.find(:hi_there)}.to raise_error(message)
+    end
   end
 
   context "#classes" do
