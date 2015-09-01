@@ -49,20 +49,20 @@ end
 
 # Turf::Local is the first place Turf looks for a
 # matching method
-Turf.find(:something) # => "something in local"
+Turf.something # => "something in local"
 
 # The RAILS_ENV is set to production, so Turf looks
 # in Turf::Production second if the method is not
 # found in Turf::Local
 # Turf::Development is ignored in production
-Turf.find(:blah) # => "blah in production"
+Turf.blah # => "blah in production"
 
 # Turf::Default is the last place to look
-Turf.find(:four) # => 4
+Turf.four # => 4
 
 # Turf raises an exception when it can't find
 # a matching method
-Turf.find(:hi_there) # => raises an exception
+Turf.hi_there # => raises an exception
 ```
 
 ## Setup
@@ -99,7 +99,7 @@ Require all the files in the `/lib/#{project_name}.rb` file:
 require_relative "../config/turf/default.rb"
 
 def require_all(pattern)
-  Dir.glob("#{Turf.find(:root)}/#{pattern}/**/*.rb").sort.each { |path| require path }
+  Dir.glob("#{Turf.root}/#{pattern}/**/*.rb").sort.each { |path| require path }
 end
 
 require_all("config/turf")
