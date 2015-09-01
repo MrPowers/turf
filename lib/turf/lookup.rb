@@ -42,7 +42,9 @@ module Turf; class Lookup
   end
 
   def env
-    ENV['RAILS_ENV'] || 'development'
+    return Rails.env if defined?(Rails)
+    raise "The RAILS_ENV environment variable must be set" unless ENV['RAILS_ENV']
+    ENV['RAILS_ENV']
   end
 
 end; end

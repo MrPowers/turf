@@ -79,6 +79,14 @@ module Turf; describe Lookup do
       m = Lookup.new
       expect(m.send(:env)).to eq "test"
     end
+
+    it "raises an exception if the environment isn't set" do
+      ENV['RAILS_ENV'] = nil
+      m = Lookup.new
+      message = "The RAILS_ENV environment variable must be set"
+      expect {m.send(:env)}.to raise_error(message)
+      ENV['RAILS_ENV'] = "test"
+    end
   end
 
 end; end
