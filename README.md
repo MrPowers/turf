@@ -125,13 +125,17 @@ Set the `RAILS_ENV` to production on the remote host.
 
 ### Rails Projects
 
-Require all the Turf files in the config/application.rb file:
+Require all the `Turf` files in the `config/application.rb` file:
 
 ```ruby
 Dir.glob("#{Rails.root}/config/turf/**/*.rb").each { |path| require path }
 ```
 
 That's it!
+
+## .gitignore Turf::Local
+
+Application secrets can be stored in `Turf::Local` and the file can be gitignored so these secrets are not exposed in source control.  Add this line (`/config/turf/local.rb`) to your `.gitignore` file and `scp` the local.rb file to the remote host when changes are made.
 
 ## Contributing
 
