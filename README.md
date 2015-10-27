@@ -93,6 +93,8 @@ Run the rake task to create the classes in your project:
 bundle exec rake turf:setup
 ```
 
+### Ruby Projects (see below for Rails Projects)
+
 Require all the files in the `/lib/#{project_name}.rb` file:
 
 ```ruby
@@ -104,6 +106,8 @@ end
 
 require_all("config/turf")
 ```
+
+***RAILS_ENV is used to manage the environment for compatibility with other gems***
 
 Set the `RAILS_ENV` to "develoment" at the top of the `/lib/#{project_name}.rb` file:
 
@@ -118,6 +122,16 @@ ENV['RAILS_ENV'] = 'test'
 ```
 
 Set the `RAILS_ENV` to production on the remote host.
+
+### Rails Projects
+
+Require all the Turf files in the config/application.rb file:
+
+```ruby
+Dir.glob("#{Rails.root}/config/turf/**/*.rb").each { |path| require path }
+```
+
+That's it!
 
 ## Contributing
 
