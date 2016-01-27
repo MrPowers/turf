@@ -4,11 +4,18 @@ module Turf; class Lookup
     lookup_path.each do |obj|
       return obj.send(message) if obj.respond_to?(message)
     end
+    if config_class && local_class
+      raise "The #{missing_required_local_methods} must be defined in #{local_class}" unless missing_required_local_methods.empty?
+    end
     raise "No Turf classes found... these must be defined and required" if classes.empty?
     raise NoMethodError, "The #{message} method could not be found in any of these Turf configuration classes: #{classes.join(", ")}"
   end
 
   private
+
+  def missing_required_local_methods
+    config_class.required_local_instance_methods - local_class.instance_methods(false)
+  end
 
   def lookup_path
     classes.map(&:new)
@@ -20,6 +27,10 @@ module Turf; class Lookup
       env_class,
       default_class
     ].compact
+  end
+
+  def config_class
+    class_or_nil { Config }
   end
 
   def local_class
