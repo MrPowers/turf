@@ -2,13 +2,13 @@ module Turf; class Lookup
 
   def find(message)
     if local_class && default_class
-      message = "The following methods are defined in the #{local_class} class but not the #{default_class} class: #{methods_in_local_and_not_default.join(', ')}.  All methods defined in #{local_class} must also be defined in #{default_class}."
-      raise message unless methods_in_local_and_not_default.empty?
+      m = "The following methods are defined in the #{local_class} class but not the #{default_class} class: #{methods_in_local_and_not_default.join(', ')}.  All methods defined in #{local_class} must also be defined in #{default_class}."
+      raise m unless methods_in_local_and_not_default.empty?
     end
-    raise "No Turf classes found... these must be defined and required" if classes.empty?
     lookup_path.each do |obj|
       return obj.send(message) if obj.respond_to?(message)
     end
+    raise "No Turf classes found... these must be defined and required" if classes.empty?
     raise NoMethodError, "The #{message} method could not be found in any of these Turf configuration classes: #{classes.join(", ")}"
   end
 
